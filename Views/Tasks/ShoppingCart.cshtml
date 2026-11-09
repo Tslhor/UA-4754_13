@@ -1,0 +1,48 @@
+@model Dictionary<string, int>
+@{
+    ViewData["Title"] = "ShoppingCart";
+    var supermarkets = ViewBag.Supermarkets as List<string> ?? new List<string>();
+    var today = DateTime.Today;
+    
+    var dates = new List<string>
+    {
+        today.ToString("yyyy-MM-dd"),
+        today.AddDays(1).ToString("yyyy-MM-dd"),
+        today.AddDays(2).ToString("yyyy-MM-dd")
+    };
+}
+
+<h1>Shopping Cart</h1>
+
+@using (Html.BeginForm("ShoppingCart", "Tasks", FormMethod.Post))
+{
+    <div class="form-row">
+        <label for="name">Name</label>
+        @Html.TextBox("name", null, new { @class = "form-control", style = "max-width: 300px;" })
+    </div>
+
+    <div class="form-row">
+        <label for="address">Address</label>
+        @Html.TextBox("address", null, new { @class = "form-control", style = "max-width: 300px;" })
+    </div>
+
+    <div class="form-row">
+        <label for="supermarket">Supermarket</label>
+        @Html.DropDownList("supermarket", new SelectList(supermarkets), new { @class = "form-control", style = "max-width: 300px;" })
+    </div>
+
+    <div class="form-row">
+        <label>Shipping date</label>
+        @foreach (var date in dates)
+        {
+            <label class="radio-option">@Html.RadioButton("shippingDate", date) @date</label>
+        }
+    </div>
+
+    <div class="form-row">
+        <label for="products">Products</label>
+        @Html.ListBox("products", new MultiSelectList(Model.Keys), new { @class = "form-control", style = "max-width: 300px;" })
+    </div>
+
+    <input class="button" type="submit" value="Submit" />
+}

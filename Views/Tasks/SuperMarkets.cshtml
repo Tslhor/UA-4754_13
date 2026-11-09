@@ -1,0 +1,17 @@
+@{
+    ViewData["Title"] = "SuperMarkets";
+    var markets = ViewBag.Supermarkets as List<string>;
+}
+
+<h1 class="display-4">Our Supermarkets</h1>
+<h2>There are @(markets?.Count ?? 0) markets:</h2>
+
+<ul class="list-unstyled mt-3" style="line-height: 2;">
+    @if (markets != null)
+    {
+        foreach (var market in markets)
+        {
+            <li>@market</li>
+        }
+    }
+</ul>
